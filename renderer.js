@@ -8,16 +8,16 @@
 /**
  * Repro steps for the Electron Timer blocking bug
  */
-var child_process = require("child_process");
-let forked = child_process.fork("awaitPromise.js", [], { stdio: "pipe", cwd: process.cwd() });
-forked.stdout.pipe(process.stdout);
-console.log("Spawned child process", forked.pid);
-forked.on("exit", () => {
-    console.log("child process exits");
-});
-forked.on("message", (message) => {
-    console.log(`child process send a message ${message}`);
-});
-forked.on("error", () => {
-    console.log("child process send an error");
-})
+// var child_process = require("child_process");
+// let forked = child_process.fork("awaitPromise.js", [], { stdio: "pipe", cwd: process.cwd() });
+// forked.stdout.pipe(process.stdout);
+// console.log("Spawned child process", forked.pid);
+// forked.on("exit", () => {
+//     console.log("child process exits");
+// });
+// forked.on("message", (message) => {
+//     console.log(`child process send a message ${message}`);
+// });
+// forked.on("error", () => {
+//     console.log("child process send an error");
+// })

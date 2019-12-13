@@ -1,12 +1,12 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-function createWindow () {
+function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
@@ -52,3 +52,20 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+/**
+ * Repro steps for the Electron Timer blocking bug
+ */
+var child_process = require("child_process");
+let forked = child_process.fork("awaitPromise.js", [], { stdio: "pipe", cwd: process.cwd() });
+forked.stdout.pipe(process.stdout);
+console.log("Spawned child process", forked.pid);
+forked.on("exit", () => {
+  console.log("child process exits");
+});
+forked.on("message", (message) => {
+  console.log(`child process send a message ${message}`);
+});
+forked.on("error", () => {
+  console.log("child process send an error");
+})
